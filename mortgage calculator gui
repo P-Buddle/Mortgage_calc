@@ -1,0 +1,135 @@
+from tkinter import *
+
+root = Tk()
+root.title("mortgage calculator")
+
+
+myLabel_1 = Label(root, text="property value: £")
+myLabel_1.grid(row=0, sticky=E)
+
+box_1 = Entry(root)
+box_1.grid(row=0, column=1)
+
+myLabel_2 = Label(root, text="deposit amount: £")
+myLabel_2.grid(row=1, sticky=E)
+
+box_2 = Entry(root)
+box_2.grid(row=1, column=1)
+
+myLabel_3 = Label(root, text="term in years: ")
+myLabel_3.grid(row=2, sticky=E)
+
+box_3 = Entry(root)
+box_3.grid(row=2, column=1)
+
+myLabel_4 = Label(root, text="interest rate: (%)")
+myLabel_4.grid(row=3, sticky=E)
+
+box_4 = Entry(root)
+box_4.grid(row=3, column=1)
+
+
+def myClick():
+    borrow = int(box_1.get()) - int(box_2.get())
+    term = box_3.get()
+    interest_rate_decimal = float(box_4.get()) / 100
+    i = interest_rate_decimal / 12
+    n = int(term) * 12
+    top = borrow * i
+    bracket = (1 + i) ** -n
+    bottom = 1 - float(bracket)
+    rate = float(top) / float(bottom)
+
+    answerLable = Label(root, fg="red" ,text="monthly payments are: £" + str(round(rate, 2)))
+    answerLable.config(font=("Courier", 14))
+    answerLable.grid(row=4, column=1, sticky=W)
+
+    label_5 = Label(root, text="initial period (years): ")
+    label_5.grid(row=6, sticky=E)
+
+    box_5 = Entry(root)
+    box_5.grid(row=6, column=2)
+
+    label_6 = Label(root, text="product fee: £")
+    label_6.grid(row=7, sticky=E)
+
+    box_6 = Entry(root)
+    box_6.grid(row=7, column=2)
+
+    label_7 = Label(root, text="valuation fee: £")
+    label_7.grid(row=8, sticky=E)
+
+    box_7 = Entry(root)
+    box_7.grid(row=8, column=2)
+
+    def myClick_2():
+        initial_period = box_5.get()
+        product_fee = box_6.get()
+        valuation = box_7.get()
+        initial_period_monthly = (int(initial_period) * 12) * float(rate)
+        fixed_period_total = int(product_fee) + int(valuation) + round(initial_period_monthly, 2)
+        answerLable_2 = Label(root, fg="red", text="Total cost over intitial period: £" + str(fixed_period_total))
+        answerLable_2.config(font=("Courier", 14))
+        answerLable_2.grid(row=9, column=1, sticky=W)
+
+        def myClick_3():
+            label_8 = Label(root, text="interest rate: (%)")
+            label_8.grid(row=11, sticky=E)
+
+            box_8 = Entry(root)
+            box_8.grid(row=11, column=1)
+
+            label_9 = Label(root, text="initial period (years): ")
+            label_9.grid(row=12, sticky=E)
+
+            box_9 = Entry(root)
+            box_9.grid(row=12, column=1)
+
+            label_10 = Label(root, text="product fee: £")
+            label_10.grid(row=13, sticky=E)
+
+            box_10 = Entry(root)
+            box_10.grid(row=13, column=1)
+
+            label_11 = Label(root, text="valuation fee: £")
+            label_11.grid(row=14, sticky=E)
+
+            box_11 = Entry(root)
+            box_11.grid(row=14, column=1)
+
+            def myClick_4():
+                borrow = int(box_1.get()) - int(box_2.get())
+                term = box_3.get()
+                interest_rate_decimal = float(box_8.get()) / 100
+                i = interest_rate_decimal / 12
+                n = int(term) * 12
+                top = borrow * i
+                bracket = (1 + i) ** -n
+                bottom = 1 - float(bracket)
+                rate = float(top) / float(bottom)
+                initial_period_2 = box_9.get()
+                product_fee_2 = box_10.get()
+                valuation_2 = box_7.get()
+                initial_period_monthly_2 = (int(initial_period_2) * 12) * float(rate)
+                fixed_period_total_2 = int(product_fee_2) + int(valuation_2) + round(initial_period_monthly_2, 2)
+                answerLable_3 = Label(root, fg="red",
+                                      text="Total cost over intitial period: £" + str(fixed_period_total_2))
+                answerLable_3.config(font=("Courier", 14))
+                answerLable_3.grid(row=16, column=1, sticky=W)
+
+
+            button_4 = Button(root, text="calculate second product", command=myClick_4, fg="blue")
+            button_4.grid(row=15)
+
+        myButton_3 = Button(root, text="compare to other product", command=myClick_3)
+        myButton_3.grid(row=10, column="1")
+
+
+    myButton_2 = Button(root, text="calculate total payment over initial period", command=myClick_2, fg="blue")
+    myButton_2.grid(row=9)
+
+
+myButton = Button(root, text="calculate monthly payments", command=myClick, fg="blue")
+myButton.grid(row=4)
+
+root.mainloop()
